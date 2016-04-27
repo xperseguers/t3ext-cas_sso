@@ -7,6 +7,12 @@ cas_context = /cas
 # cat=basic/links/3; type=int+; label=LLL:EXT:cas_sso/Resources/Private/Language/locallang_db.xlf:settings.cas_port
 cas_port = 443
 
+# cat=basic/links/4; type=string; label=LLL:EXT:cas_sso/Resources/Private/Language/locallang_db.xlf:settings.logout_fe_redirect_uri
+logout_fe_redirect_uri =
+
+# cat=basic/links/4; type=string; label=LLL:EXT:cas_sso/Resources/Private/Language/locallang_db.xlf:settings.logout_be_redirect_uri
+logout_be_redirect_uri =
+
 # cat=basic/file/1; type=string; label=LLL:EXT:cas_sso/Resources/Private/Language/locallang_db.xlf:settings.ca_cert_path
 ca_cert_path =
 

@@ -12,6 +12,12 @@
             <trans-unit id="settings.cas_port">
                 <source>CAS Port: Port of your CAS server. It is most probably 443 for a HTTPS server.</source>
             </trans-unit>
+            <trans-unit id="settings.logout_fe_redirect_uri">
+                <source>Frontend Redirect URI: Optional redirect URI after disconnecting from CAS.</source>
+            </trans-unit>
+            <trans-unit id="settings.logout_be_redirect_uri">
+                <source>Backend Redirect URI: Optional redirect URI after disconnecting from CAS.</source>
+            </trans-unit>
             <trans-unit id="settings.ca_cert_path">
                 <source>CA Certificate Path: Path to the PEM-encoded CA chain that issued the CAS server certificate. Both site-relative and absolute paths supported. CAUTION: VALIDATING THE CAS SERVER IS CRUCIAL TO THE SECURITY OF THE CAS PROTOCOL, SO PLEASE DO NOT LEAVE THIS SETTING EMPTY UNLESS YOU ARE ONLY QUICK TESTING!</source>
             </trans-unit>

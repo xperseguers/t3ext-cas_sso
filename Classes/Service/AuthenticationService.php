@@ -126,4 +126,23 @@ class AuthenticationService extends \TYPO3\CMS\Sv\AuthenticationService
         return static::STATUS_AUTHENTICATION_FAILURE_CONTINUE;
     }
 
+    /**
+     * Logs out from CAS.
+     *
+     * @return void
+     */
+    public function logout()
+    {
+        if ($this->service === null) {
+            // CAS is not available
+            return;
+        }
+
+        $mode = strtolower(TYPO3_MODE);
+        if ((bool)$this->settings['enable_' . $mode . '_sso']) {
+            $redirectUri = $this->settings['logout_' . $mode . '_redirect_uri'];
+            $this->service->logout($redirectUri);
+        }
+    }
+
 }

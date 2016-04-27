@@ -86,13 +86,18 @@ class CentralAuthenticationService
     }
 
     /**
-     * Logs out.
+     * Logs out the user from CAS server.
      *
+     * @param string $redirectUri
      * @return void
      */
-    public function logout()
+    public function logout($redirectUri = '')
     {
-        \phpCAS::logout();
+        if (empty($redirectUri)) {
+            \phpCAS::logout();
+        } else {
+            \phpCAS::logoutWithRedirectService($redirectUri);
+        }
     }
 
 }
