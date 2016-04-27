@@ -13,7 +13,7 @@
                 <source>CAS Port: Port of your CAS server. It is most probably 443 for a HTTPS server.</source>
             </trans-unit>
             <trans-unit id="settings.ca_cert_path">
-                <source>CA Certificate Path: Path to the PEM-encoded CA chain that issued the CAS server certificate. Both site-relative and absolute paths supported.</source>
+                <source>CA Certificate Path: Path to the PEM-encoded CA chain that issued the CAS server certificate. Both site-relative and absolute paths supported. CAUTION: VALIDATING THE CAS SERVER IS CRUCIAL TO THE SECURITY OF THE CAS PROTOCOL, SO PLEASE DO NOT LEAVE THIS SETTING EMPTY UNLESS YOU ARE ONLY QUICK TESTING!</source>
             </trans-unit>
             <trans-unit id="settings.enable_fe_sso">
                 <source>Frontend SSO: Tick if SSO should be enabled for Frontend authentication.</source>

@@ -63,7 +63,7 @@ class CentralAuthenticationService
         \phpCAS::client(CAS_VERSION_2_0, $settings['cas_host'], (int)$settings['cas_port'], $settings['cas_context']);
 
         if (!empty($settings['ca_cert_path'])) {
-            \phpCAS::setCasServerCACert($settings['ca_cert_path']);
+            \phpCAS::setCasServerCACert(GeneralUtility::getFileAbsFileName($settings['ca_cert_path']));
         } else {
             // For quick testing you can disable SSL validation of the CAS server
             // THIS SETTING IS NOT RECOMMENDED FOR PRODUCTION.
