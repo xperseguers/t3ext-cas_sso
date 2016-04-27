@@ -1,0 +1,17 @@
+# cat=basic/links/1; type=string; label=LLL:EXT:cas_sso/Resources/Private/Language/locallang_db.xlf:settings.cas_host
+cas_host =
+
+# cat=basic/links/2; type=string; label=LLL:EXT:cas_sso/Resources/Private/Language/locallang_db.xlf:settings.cas_context
+cas_context =
+
+# cat=basic/links/3; type=int+; label=LLL:EXT:cas_sso/Resources/Private/Language/locallang_db.xlf:settings.cas_port
+cas_port = 443
+
+# cat=basic/file/1; type=string; label=LLL:EXT:cas_sso/Resources/Private/Language/locallang_db.xlf:settings.ca_cert_path
+ca_cert_path =
+
+# cat=basic/enable/1; type=boolean; label=LLL:EXT:cas_sso/Resources/Private/Language/locallang_db.xlf:settings.enable_fe_sso
+enable_fe_sso = 0
+
+# cat=basic/enable/2; type=boolean; label=LLL:EXT:cas_sso/Resources/Private/Language/locallang_db.xlf:settings.enable_be_sso
+enable_be_sso = 0
