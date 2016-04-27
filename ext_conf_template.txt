@@ -2,7 +2,7 @@
 cas_host =
 
 # cat=basic/links/2; type=string; label=LLL:EXT:cas_sso/Resources/Private/Language/locallang_db.xlf:settings.cas_context
-cas_context =
+cas_context = /cas
 
 # cat=basic/links/3; type=int+; label=LLL:EXT:cas_sso/Resources/Private/Language/locallang_db.xlf:settings.cas_port
 cas_port = 443

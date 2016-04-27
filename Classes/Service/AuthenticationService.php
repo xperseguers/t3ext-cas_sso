@@ -14,6 +14,9 @@
 
 namespace Causal\CasSso\Service;
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use Causal\CasSso\Service\CentralAuthenticationService;
+
 /**
  * This class is responsible for providing CAS SSO to TYPO3.
  *
@@ -46,6 +49,11 @@ class AuthenticationService extends \TYPO3\CMS\Sv\AuthenticationService
     const EXT_KEY = 'cas_sso';
 
     /**
+     * @var CentralAuthenticationService
+     */
+    protected $service;
+
+    /**
      * @var array
      */
     protected $settings;
@@ -62,6 +70,12 @@ class AuthenticationService extends \TYPO3\CMS\Sv\AuthenticationService
     {
         $settings = $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'][static::EXT_KEY];
         $this->settings = $settings ? unserialize($settings) : [];
+
+        $this->service = GeneralUtility::makeInstance(CentralAuthenticationService::class);
+        if (!$this->service->initialize($this->settings)) {
+            // Invalidate the service
+            $this->service = null;
+        }
     }
 
     /**
@@ -72,11 +86,12 @@ class AuthenticationService extends \TYPO3\CMS\Sv\AuthenticationService
      */
     public function getUser()
     {
-        $authenticatedUser = null;
+        if ($this->service === null) {
+            // CAS is not available
+            return false;
+        }
 
-        // TODO: use phpCAS
-        $authenticatedUser = 'einstein';
-
+        $authenticatedUser = $this->service->login();
         if (!empty($authenticatedUser)) {
             $_SERVER['REMOTE_USER'] = $authenticatedUser;
             $this->isAuthenticated = true;
@@ -96,6 +111,11 @@ class AuthenticationService extends \TYPO3\CMS\Sv\AuthenticationService
      */
     public function authUser(array $user)
     {
+        if ($this->service === null) {
+            // CAS is not available
+            return static::STATUS_AUTHENTICATION_FAILURE_CONTINUE;
+        }
+
         if ($this->isAuthenticated) {
             // From our point of view the user is properly authenticated but it may get
             // further checked by other authentication services (e.g., domain-based restriction)
