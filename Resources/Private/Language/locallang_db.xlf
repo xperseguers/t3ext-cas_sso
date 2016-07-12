@@ -27,6 +27,9 @@
             <trans-unit id="settings.enable_be_sso">
                 <source>Backend SSO: Tick if SSO should be enabled for Backend authentication.</source>
             </trans-unit>
+            <trans-unit id="settings.fix_x_forwarded_port">
+                <source>Fix X_FORWARDED_PORT: Under some circumstances, the header "X_FORWARDED_PORT" may be missing but instead the original port is appended to X_FORWARDED_HOST. Although this is valid according to rfc7239#5.3 and rfc7230#2.7.1, you may tick this checkbox to remove it from X_FORWARDED_HOST and set it to X_FORWARDED_PORT.</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -48,6 +48,22 @@ $boot = function ($_EXTKEY) {
                 ]
             );
         }
+
+        // Under some circumstances, the header "X_FORWARDED_PORT" may be missing but instead
+        // appended to X_FORWARDED_HOST. This is valid according to rfc7239#5.3 and rfc7230#2.7.1
+        // but may do more harm than good
+        if (isset($_SERVER['HTTP_X_FORWARDED_HOST']) && !empty($settings['fix_x_forwarded_port'])) {
+            // explode the host list separated by comma and use the first host
+            $hosts = explode(',', $_SERVER['HTTP_X_FORWARDED_HOST']);
+            if (!empty($hosts)) {
+                list($forwardedHost, $forwardedPort) = explode(':', $hosts[0]);
+                if (!empty($forwardedPort)) {
+                    $_SERVER['HTTP_X_FORWARDED_PORT'] = $forwardedPort;
+                    $hosts[0] = $forwardedHost;
+                    $_SERVER['HTTP_X_FORWARDED_HOST'] = implode(',', $hosts);
+                }
+            }
+        }
     }
 };
 

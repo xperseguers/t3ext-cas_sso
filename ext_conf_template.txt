@@ -21,3 +21,6 @@ enable_fe_sso = 0
 
 # cat=basic/enable/2; type=boolean; label=LLL:EXT:cas_sso/Resources/Private/Language/locallang_db.xlf:settings.enable_be_sso
 enable_be_sso = 0
+
+# cat=advanced/enable/1; type=boolean; label=LLL:EXT:cas_sso/Resources/Private/Language/locallang_db.xlf:settings.fix_x_forwarded_port
+fix_x_forwarded_port = 0
