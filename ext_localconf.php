@@ -61,6 +61,10 @@ $boot = function ($_EXTKEY) {
                     $_SERVER['HTTP_X_FORWARDED_PORT'] = $forwardedPort;
                     $hosts[0] = $forwardedHost;
                     $_SERVER['HTTP_X_FORWARDED_HOST'] = implode(',', $hosts);
+
+                    if (!isset($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
+                        $_SERVER['HTTP_X_FORWARDED_PROTO'] = (int)$forwardedPort === 443 ? 'https' : 'http';
+                    }
                 }
             }
         }
