@@ -7,7 +7,11 @@ $boot = function ($_EXTKEY) {
         $registerLogOffPostProcessing = false;
         $subtypes = [];
 
-        if (isset($settings['enable_fe_sso']) && (bool)$settings['enable_fe_sso']) {
+        // Compatibility with EXT:cabag_loginas
+        $cabloginasParameters = \TYPO3\CMS\Core\Utility\GeneralUtility::_GET('tx_cabagloginas');
+        $simulateFrontendUser = is_array($cabloginasParameters) && !empty($cabloginasParameters['userid']);
+
+        if (!$simulateFrontendUser && isset($settings['enable_fe_sso']) && (bool)$settings['enable_fe_sso']) {
             $GLOBALS['TYPO3_CONF_VARS']['SVCONF']['auth']['setup']['FE_fetchUserIfNoSession'] = 1;
             $registerLogOffPostProcessing = true;
 
