@@ -26,6 +26,12 @@ $boot = function ($_EXTKEY) {
             $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_userauth.php']['logoff_post_processing'][] = \Causal\CasSso\Service\AuthenticationService::class . '->logout';
         }
 
+        // If the request comes from EXT:crawler then we should silently disable SSO
+        $userAgent = \TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('HTTP_USER_AGENT');
+        if (stripos($userAgent, 'TYPO3 crawler') !== false) {
+            $subtypes = [];
+        }
+
         if (!empty($subtypes)) {
             \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addService(
                 $_EXTKEY,
