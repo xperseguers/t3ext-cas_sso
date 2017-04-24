@@ -7,23 +7,44 @@ $boot = function ($_EXTKEY) {
         $registerLogOffPostProcessing = false;
         $subtypes = [];
 
-        // Compatibility with EXT:cabag_loginas
-        $cabloginasParameters = \TYPO3\CMS\Core\Utility\GeneralUtility::_GET('tx_cabagloginas');
-        $simulateFrontendUser = is_array($cabloginasParameters) && !empty($cabloginasParameters['userid']);
+        $hooks = [];
+        if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cas_sso']['beforeSsoActivation'])) {
+            $hooks = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cas_sso']['beforeSsoActivation'];
+        }
 
-        if (!$simulateFrontendUser && isset($settings['enable_fe_sso']) && (bool)$settings['enable_fe_sso']) {
-            $GLOBALS['TYPO3_CONF_VARS']['SVCONF']['auth']['setup']['FE_fetchUserIfNoSession'] = 1;
-            $registerLogOffPostProcessing = true;
+        if (isset($settings['enable_fe_sso']) && (bool)$settings['enable_fe_sso']) {
+            // Hook for dynamically disabling SSO
+            $isSsoEnabled = true;
+            foreach ($hooks as $className) {
+                $hookObject = \TYPO3\CMS\Core\Utility\GeneralUtility::getUserObj($className);
+                if (is_callable($hookObject, 'isSsoEnabled')) {
+                    $isSsoEnabled &= $hookObject->isSsoEnabled('FE');
+                }
+            }
+            if ($isSsoEnabled) {
+                $GLOBALS['TYPO3_CONF_VARS']['SVCONF']['auth']['setup']['FE_fetchUserIfNoSession'] = 1;
+                $registerLogOffPostProcessing = true;
 
-            $subtypes[] = 'getUserFE';
-            $subtypes[] = 'authUserFE';
+                $subtypes[] = 'getUserFE';
+                $subtypes[] = 'authUserFE';
+            }
         }
         if (isset($settings['enable_be_sso']) && (bool)$settings['enable_be_sso']) {
-            $GLOBALS['TYPO3_CONF_VARS']['SVCONF']['auth']['setup']['BE_fetchUserIfNoSession'] = 1;
-            $registerLogOffPostProcessing = true;
+            // Hook for dynamically disabling SSO
+            $isSsoEnabled = true;
+            foreach ($hooks as $className) {
+                $hookObject = \TYPO3\CMS\Core\Utility\GeneralUtility::getUserObj($className);
+                if (is_callable($hookObject, 'isSsoEnabled')) {
+                    $isSsoEnabled &= $hookObject->isSsoEnabled('BE');
+                }
+            }
+            if ($isSsoEnabled) {
+                $GLOBALS['TYPO3_CONF_VARS']['SVCONF']['auth']['setup']['BE_fetchUserIfNoSession'] = 1;
+                $registerLogOffPostProcessing = true;
 
-            $subtypes[] = 'getUserBE';
-            $subtypes[] = 'authUserBE';
+                $subtypes[] = 'getUserBE';
+                $subtypes[] = 'authUserBE';
+            }
         }
 
         if ($registerLogOffPostProcessing) {
