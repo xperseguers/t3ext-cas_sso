@@ -62,6 +62,9 @@ class CentralAuthenticationService
         // Initialize phpCAS
         \phpCAS::client(CAS_VERSION_2_0, $settings['cas_host'], (int)$settings['cas_port'], $settings['cas_context']);
 
+        // set the language to french
+        \phpCAS::setLang(PHPCAS_LANG_FRENCH);
+
         if (!empty($settings['ca_cert_path'])) {
             \phpCAS::setCasServerCACert(GeneralUtility::getFileAbsFileName($settings['ca_cert_path']));
         } else {
