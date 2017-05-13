@@ -17,7 +17,8 @@ $boot = function ($_EXTKEY) {
             $isSsoEnabled = true;
             foreach ($hooks as $className) {
                 $hookObject = \TYPO3\CMS\Core\Utility\GeneralUtility::getUserObj($className);
-                if (is_callable($hookObject, 'isSsoEnabled')) {
+                $isSsoEnabledMethod = array($hookObject, 'isSsoEnabled');
+                if (is_callable($isSsoEnabledMethod)) {
                     $isSsoEnabled &= $hookObject->isSsoEnabled('FE');
                 }
             }
@@ -34,7 +35,8 @@ $boot = function ($_EXTKEY) {
             $isSsoEnabled = true;
             foreach ($hooks as $className) {
                 $hookObject = \TYPO3\CMS\Core\Utility\GeneralUtility::getUserObj($className);
-                if (is_callable($hookObject, 'isSsoEnabled')) {
+                $isSsoEnabledMethod = array($hookObject, 'isSsoEnabled');
+                if (is_callable($isSsoEnabledMethod)) {
                     $isSsoEnabled &= $hookObject->isSsoEnabled('BE');
                 }
             }
