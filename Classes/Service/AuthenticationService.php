@@ -140,7 +140,20 @@ class AuthenticationService extends \TYPO3\CMS\Sv\AuthenticationService
 
         $mode = strtolower(TYPO3_MODE);
         if ((bool)$this->settings['enable_' . $mode . '_sso']) {
-            $redirectUri = $this->settings['logout_' . $mode . '_redirect_uri'];
+            $redirectUri = '';
+
+            if (!empty($this->settings['logout_' . $mode . '_redirect_uri'])) {
+                $this->service->logout($this->settings['logout_' . $mode . '_redirect_uri']);
+
+            } elseif (!empty($this->settings['logout_' . $mode . '_redirect_path'])) {
+                $casScheme = ($this->settings['cas_port'] == '443') ? 'https' : 'http';
+                $casUri = urlencode($casScheme . '://' . $this->settings['cas_host'] . $this->settings['cas_context']);
+
+                $instanceBaseUrl = GeneralUtility::getIndpEnv('TYPO3_REQUEST_HOST');
+                $instanceUri = urlencode($instanceBaseUrl);
+                $redirectUri = $instanceBaseUrl . $this->settings['logout_' . $mode . '_redirect_path'] . '?instanceUri=' . $instanceUri . '&casUri=' . $casUri;
+            }
+
             $this->service->logout($redirectUri);
         }
     }
