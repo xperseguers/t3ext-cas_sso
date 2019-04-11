@@ -33,10 +33,6 @@
   "replace": {
     "cas_sso": "self.version"
   },
-  "config": {
-    "vendor-dir": ".Build/vendor",
-    "bin-dir": ".Build/bin"
-  },
   "scripts": {
     "post-autoload-dump": [
       "mkdir -p .Build/Web/typo3conf/ext/",
