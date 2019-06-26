@@ -17,6 +17,7 @@ namespace Causal\CasSso\Service;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
+
 /**
  * This class is the actual proxy to CAS server.
  *
@@ -48,7 +49,8 @@ class CentralAuthenticationService
         }
 
         // Load the phpCAS framework
-        require_once ExtensionManagementUtility::extPath(static::EXT_KEY) . 'Classes/Vendor/phpCAS/source/CAS.php';
+        $phpCasPath =  GeneralUtility::getIndpEnv('TYPO3_DOCUMENT_ROOT') . '/../vendor/apereo/phpcas/CAS.php';
+        require_once $phpCasPath;
 
         $isDevelopment = true; //GeneralUtility::getApplicationContext() === 'Development';
         if ($isDevelopment) {
